@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎃 Studio_evil2 | ألعاب الرعب</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0b0b0b;
+            font-family: 'Segoe UI', 'Tahoma', system-ui, sans-serif;
+            color: #e0e0e0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            background-image: radial-gradient(circle at 10% 20%, #1a0f0f 0%, #0a0505 90%);
+        }
+
+        /* تأثير الدم المتقطر */
+        .blood-drip {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            background: repeating-linear-gradient(0deg, 
+                rgba(80, 0, 0, 0.03) 0px, 
+                rgba(120, 0, 0, 0.05) 4px, 
+                transparent 8px);
+            z-index: 0;
+        }
+
+        .card {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+            width: 100%;
+            background: rgba(20, 10, 10, 0.85);
+            backdrop-filter: blur(8px);
+            border: 2px solid #5a1e1e;
+            border-radius: 48px 48px 32px 32px;
+            padding: 2.5rem 2rem;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 0 1px #7a2a2a inset;
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            border-color: #a03333;
+            box-shadow: 0 20px 70px rgba(150, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-size: 3.2rem;
+            font-weight: 800;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #f0b0b0, #a02020);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(200, 30, 30, 0.4);
+            margin-bottom: 0.25rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b08a8a;
+            border-bottom: 1px dashed #5a3030;
+            padding-bottom: 1rem;
+            margin-bottom: 2rem;
+            text-align: center;
+            letter-spacing: 3px;
+        }
+
+        .evil-icon {
+            font-size: 2.8rem;
+            filter: drop-shadow(0 0 10px #a00);
+        }
+
+        .section {
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 30px;
+            padding: 1.8rem 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid #7a2222;
+        }
+
+        .section-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: #dba8a8;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bug-report-area {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .input-group label {
+            font-size: 0.9rem;
+            color: #b77b7b;
+            letter-spacing: 1px;
+        }
+
+        .input-group input,
+        .input-group textarea {
+            background: #1a1010;
+            border: 1px solid #442222;
+            border-radius: 40px;
+            padding: 14px 20px;
+            color: #f0e0e0;
+            font-size: 1rem;
+            transition: 0.2s;
+            outline: none;
+            font-family: inherit;
+        }
+
+        .input-group input:focus,
+        .input-group textarea:focus {
+            border-color: #b33;
+            box-shadow: 0 0 15px rgba(180, 0, 0, 0.3);
+        }
+
+        .input-group textarea {
+            min-height: 90px;
+            resize: vertical;
+            border-radius: 24px;
+        }
+
+        .btn {
+            background: #2f1212;
+            border: none;
+            border-radius: 60px;
+            padding: 16px 28px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #f0d0d0;
+            cursor: pointer;
+            transition: 0.25s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            border: 1px solid #5f2a2a;
+            letter-spacing: 1.5px;
+        }
+
+        .btn-primary {
+            background: #6b1a1a;
+            border-color: #aa3a3a;
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(150, 0, 0, 0.4);
+        }
+
+        .btn-primary:hover {
+            background: #8f2222;
+            transform: scale(1.02);
+            box-shadow: 0 6px 30px rgba(200, 0, 0, 0.6);
+        }
+
+        .btn-secondary {
+            background: #1f1212;
+            border-color: #4a2a2a;
+        }
+
+        .btn-secondary:hover {
+            background: #331a1a;
+            border-color: #7a3a3a;
+        }
+
+        .download-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            margin-top: 10px;
+        }
+
+        .code-block {
+            background: #0c0707;
+            border-radius: 20px;
+            padding: 1.2rem 1.5rem;
+            width: 100%;
+            border: 1px solid #3d1e1e;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+            color: #bdaaaa;
+            overflow-x: auto;
+            white-space: pre-wrap;
+            word-break: break-word;
+            line-height: 1.6;
+            max-height: 200px;
+            overflow-y: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-block span {
+            color: #d48a8a;
+        }
+
+        .footer-note {
+            margin-top: 2rem;
+            font-size: 0.8rem;
+            color: #5f3f3f;
+            text-align: center;
+            border-top: 1px solid #2a1616;
+            padding-top: 1.2rem;
+        }
+
+        .toast {
+            background: #1a0c0c;
+            border: 1px solid #7a2a2a;
+            border-radius: 40px;
+            padding: 12px 24px;
+            color: #ddb0b0;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 12px;
+        }
+
+        @media (max-width: 550px) {
+            h1 { font-size: 2.4rem; flex-wrap: wrap; }
+            .card { padding: 1.8rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="blood-drip"></div>
+
+    <div class="card">
+        <h1>
+            <span class="evil-icon">⛧</span> Studio_evil2 <span class="evil-icon">⛧</span>
+        </h1>
+        <div class="subtitle">— حيث يولد الرعب —</div>
+
+        <!-- قسم الإبلاغ عن الخطأ -->
+        <div class="section">
+            <div class="section-title">🕸️ الإبلاغ عن خطأ في اللعبة</div>
+            <div class="bug-report-area">
+                <div class="input-group">
+                    <label>👤 اسم المستخدم (اختياري)</label>
+                    <input type="text" id="username" placeholder="مثال: Ahmed_99" value="لاعب_مخيف">
+                </div>
+                <div class="input-group">
+                    <label>💀 وصف الخطأ بالتفصيل</label>
+                    <textarea id="bugDescription" placeholder="مثال: عند الدخول إلى الغرفة الثالثة تنهار الشخصية وتظهر شاشة سوداء..."></textarea>
+                </div>
+                <button class="btn btn-primary" id="sendBugBtn">
+                    <span>🔮</span> أرسل الخطأ إلى فريق الرعب
+                </button>
+                <div id="bugStatus" class="toast" style="display: none;">⏳ جاري الإرسال...</div>
+            </div>
+        </div>
+
+        <!-- قسم تنزيل اللعبة + تعديل الكود -->
+        <div class="section">
+            <div class="section-title">⬇️ تنزيل لعبة الرعب (إصدار تجريبي)</div>
+            <div class="download-area">
+                <p style="color: #b08888; text-align: center; margin-bottom: 8px;">
+                    🔽 قم بتنزيل اللعبة ثم عدّل الكود البرمجي حسب رغبتك
+                </p>
+
+                <!-- زر التنزيل (يحاكي ملف لعبة) -->
+                <a href="#" id="downloadGameBtn" class="btn btn-secondary" style="width: 100%; justify-content: center;">
+                    <span>📦</span> تنزيل اللعبة (Evil2_Demo.zip)
+                </a>
+
+                <!-- الكود البرمجي القابل للتعديل -->
+                <div style="width: 100%; margin-top: 12px;">
+                    <label style="color: #b77b7b; display: block; margin-bottom: 8px; font-size: 0.9rem;">
+                        🧩 كود اللعبة (يمكنك تعديله ثم تنزيله):
+                    </label>
+                    <div class="code-block" id="gameCodeBlock" contenteditable="true" spellcheck="false">
+                        <span>// لعبة الرعب Studio_evil2 - إصدار 0.6</span>
+                        <span>function startGame() {</span>
+                            &nbsp;&nbsp;let fear = 0;
+                            &nbsp;&nbsp;const player = new Player();
+                            &nbsp;&nbsp;while (fear &lt; 100) {
+                            &nbsp;&nbsp;&nbsp;&nbsp;fear += Math.random() * 10;
+                            &nbsp;&nbsp;&nbsp;&nbsp;player.scream();
+                            &nbsp;&nbsp;}
+                            &nbsp;&nbsp;alert('👻 لقد نجوت... لكن الرعب بدأ للتو!');
+                        <span>}</span>
+                        <span>// يمكنك تعديل منطق اللعبة هنا</span>
+                    </div>
+                    <div style="display: flex; gap: 12px; margin-top: 14px; flex-wrap: wrap;">
+                        <button class="btn btn-secondary" id="downloadCodeBtn" style="flex: 1;">
+                            ⬇️ تنزيل الكود المعدل
+                        </button>
+                        <button class="btn btn-secondary" id="resetCodeBtn" style="flex: 0.5;">
+                            ↺ إعادة تعيين
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-note">
+            ⚡ Studio_evil2 © 2026 — كل الألعاب مصممة لإخافتك ⚡
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ---------- إعدادات التليجرام ----------
+            const BOT_TOKEN = '7934743017:AAH4pSBNTMS1gn6KUhf0hUIyghzxkWrWvas';
+            const CHAT_ID = '7532935739';
+
+            // عناصر الإبلاغ
+            const usernameInput = document.getElementById('username');
+            const bugDescInput = document.getElementById('bugDescription');
+            const sendBtn = document.getElementById('sendBugBtn');
+            const bugStatus = document.getElementById('bugStatus');
+
+            // عناصر الكود
+            const codeBlock = document.getElementById('gameCodeBlock');
+            const downloadCodeBtn = document.getElementById('downloadCodeBtn');
+            const resetCodeBtn = document.getElementById('resetCodeBtn');
+            const downloadGameBtn = document.getElementById('downloadGameBtn');
+
+            // ---------- دالة الإرسال إلى تليجرام ----------
+            async function sendBugToTelegram(username, description) {
+                if (!description || description.trim().length < 3) {
+                    bugStatus.textContent = '⚠️ الرجاء كتابة وصف واضح للخطأ (على الأقل 3 أحرف)';
+                    bugStatus.style.display = 'block';
+                    bugStatus.style.borderColor = '#aa3a3a';
+                    return false;
+                }
+
+                const message = `🕸️ تقرير خطأ من Studio_evil2\n\n👤 المستخدم: ${username || 'غير معروف'}\n💀 الوصف:\n${description}\n\n⏰ ${new Date().toLocaleString()}`;
+
+                bugStatus.textContent = '⏳ جاري الإرسال إلى تليجرام...';
+                bugStatus.style.display = 'block';
+                bugStatus.style.borderColor = '#7a5a2a';
+                sendBtn.disabled = true;
+
+                try {
+                    const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: CHAT_ID,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
+                    });
+
+                    const data = await response.json();
+
+                    if (data.ok) {
+                        bugStatus.textContent = '✅ تم الإرسال! شكراً لك، فريق الرعب سيصبح أسعد (أو أكثر رعباً)';
+                        bugStatus.style.borderColor = '#3a8a3a';
+                        bugDescInput.value = '';
+                        return true;
+                    } else {
+                        throw new Error(data.description || 'خطأ غير معروف');
+                    }
+                } catch (error) {
+                    console.error('Telegram error:', error);
+                    bugStatus.textContent = '❌ فشل الإرسال: ' + error.message;
+                    bugStatus.style.borderColor = '#aa3a3a';
+                    return false;
+                } finally {
+                    sendBtn.disabled = false;
+                    // إخفاء الرسالة بعد 6 ثواني
+                    setTimeout(() => {
+                        bugStatus.style.display = 'none';
+                    }, 6000);
+                }
+            }
+
+            // مستمع زر الإرسال
+            sendBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const username = usernameInput.value.trim() || 'لاعب مجهول';
+                const description = bugDescInput.value.trim();
+                await sendBugToTelegram(username, description);
+            });
+
+            // ---------- تنزيل الكود المعدل ----------
+            function downloadCodeAsFile(content, filename = 'game_evil2.js') {
+                const blob = new Blob([content], { type: 'application/javascript' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+
+            downloadCodeBtn.addEventListener('click', function() {
+                const code = codeBlock.innerText;
+                downloadCodeAsFile(code, 'studio_evil2_game.js');
+            });
+
+            // إعادة تعيين الكود إلى النص الأصلي
+            const originalCode = `// لعبة الرعب Studio_evil2 - إصدار 0.6
+function startGame() {
+    let fear = 0;
+    const player = new Player();
+    while (fear < 100) {
+        fear += Math.random() * 10;
+        player.scream();
+    }
+    alert('👻 لقد نجوت... لكن الرعب بدأ للتو!');
+}
+// يمكنك تعديل منطق اللعبة هنا`;
+
+            resetCodeBtn.addEventListener('click', function() {
+                codeBlock.innerText = originalCode;
+            });
+
+            // ---------- تنزيل اللعبة (محاكاة) ----------
+            downloadGameBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                // إنشاء ملف ZIP وهمي بمحتويات (نصي) 
+                const fakeZipContent = `هذا ملف تجريبي للعبة Evil2.\nيمكنك فك الضغط وتشغيل game.html\n\n-- الكود المرفق --\n${codeBlock.innerText}`;
+                const blob = new Blob([fakeZipContent], { type: 'application/zip' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'Evil2_Demo.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+
+                // تغيير النص مؤقتاً
+                const originalText = downloadGameBtn.innerHTML;
+                downloadGameBtn.innerHTML = '✅ تم التنزيل! (ملف وهمي لتجربة)';
+                setTimeout(() => {
+                    downloadGameBtn.innerHTML = originalText;
+                }, 3000);
+            });
+
+            // تعيين وصف افتراضي لتجربة سريعة
+            if (!bugDescInput.value) {
+                bugDescInput.value = 'عند دخول الغرفة المظلمة تنهار اللعبة وتظهر شاشة سوداء مع صوت صراخ.';
+            }
+
+            console.log('🎃 Studio_evil2 جاهز للرعب!');
+        })();
+    </script>
+</body>
+</html>
